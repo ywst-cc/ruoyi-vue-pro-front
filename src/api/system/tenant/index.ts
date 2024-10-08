@@ -31,9 +31,14 @@ export interface TenantExportReqVO {
   createTime?: Date[]
 }
 
-// 查询租户列表
+// 查询租户分页
 export const getTenantPage = (params: TenantPageReqVO) => {
   return request.get({ url: '/system/tenant/page', params })
+}
+
+// 查询租户列表
+export const getTenantList = () => {
+  return request.get({ url: '/system/tenant/list' })
 }
 
 // 查询租户详情
