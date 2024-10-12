@@ -83,7 +83,13 @@
           <dict-tag :type="DICT_TYPE.CRM_CUSTOMER_SOURCE" :value="scope.row.source" />
         </template>
       </el-table-column>
-      <el-table-column label="手机" align="center" prop="mobile" width="120" />
+      <el-table-column label="手机" align="center" prop="mobile" width="150" >
+        <template #default="scope">
+          <el-link :underline="false" type="primary" @click="makecall(scope.row.mobile)" >
+            <Icon v-if="scope.row.mobile !== undefined && scope.row.mobile" icon="ep:phone" /> {{ scope.row.mobile }}
+          </el-link>
+        </template>
+      </el-table-column>
       <el-table-column label="电话" align="center" prop="telephone" width="130" />
       <el-table-column label="邮箱" align="center" prop="email" width="180" />
       <el-table-column label="地址" align="center" prop="detailAddress" width="180" />
@@ -171,6 +177,7 @@ import download from '@/utils/download'
 import * as ClueApi from '@/api/crm/clue'
 import ClueForm from './ClueForm.vue'
 import { TabsPaneContext } from 'element-plus'
+import { CallApi } from '@/api/callcenter/call'
 
 defineOptions({ name: 'CrmClue' })
 
@@ -227,6 +234,15 @@ const handleTabClick = (tab: TabsPaneContext) => {
 const { push } = useRouter()
 const openDetail = (id: number) => {
   push({ name: 'CrmClueDetail', params: { id } })
+}
+
+/**
+ * 外呼按钮操作
+ * @param phone
+ */
+const makecall = async (phone: string) => {
+  const res = await CallApi.makecall({ callee: phone })
+  console.log(res)
 }
 
 /** 添加/修改操作 */
