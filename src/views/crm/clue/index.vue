@@ -242,7 +242,7 @@ const openDetail = (id: number) => {
  */
 const makecall = async (phone: string) => {
   const res = await CallApi.makecall({ callee: phone })
-  console.log(res)
+  message.success("呼叫成功，注意接听通话！")
 }
 
 /** 添加/修改操作 */
